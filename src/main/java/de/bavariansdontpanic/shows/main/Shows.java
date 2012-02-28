@@ -27,12 +27,30 @@ public class Shows {
             //Document doc = Jsoup.connect(Scrape.getScrapeProperty("scrape.site")).get();
             File input = new File("/Users/nsvir4k/Downloads/source.html");
             Document doc = Jsoup.parse(input, "UTF-8");
-            Elements content = doc.getElementsByClass("day");
-            Document doc2 = Jsoup.parse(content.toString());
-            Elements day = doc2.getElementsByAttribute("id");
+            Elements tableBody = doc.getElementsByTag("tbody");
             
-            //logger.info(doc.toString());
-            logger.info(doc2.toString());
+            int i = 0;
+            for (Element day : tableBody) {
+                day.getElementsByTag("tr");
+                i++;
+                if ( i == 1) {
+                    //Found tableBody with content
+                    Elements tableRows = day.getElementsByTag("tr");
+                    int j = 0;
+                    logger.info(String.valueOf(tableRows.size()));
+                    for (Element tableRow :tableRows) {
+                        if (j == 2) {
+                            logger.info(tableRow.toString());
+                            Elements days = tableRow.getElementsByClass("day");
+                        }
+                        j++;
+                    }
+                }
+                
+                //logger.info(String.valueOf(tableBody.size()));
+            }
+            
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
